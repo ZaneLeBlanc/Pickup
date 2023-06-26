@@ -1,5 +1,12 @@
-def Available():
-  
+#Data dictionaries
+Titans = {"Ion": 1, "Tone": 1, "Monarch":1, "Ronin":1, "Northstar":1, "Legion":1, "Scorch":1}
+Ordnances = {"Gravity Star": 1, "Satchel":1, "Firestar":2, "Arc Grenade":1, "Frag Grenade":1, "Electric Smoke":1}
+
+def start():
+  print ('enter "help" for list of commands and symbols \n' )
+  print ("Available Titans:\n Ion - - - - i\n Tone - - -  t\n Monarch - - m\n Ronin - - - r\n Northstar - n\n Legion - -  l\n Scorch - -  s\n \nAvailable Ordnances:\n Gravity Star - - g\n Satchel - - - -  s\n Firestars (2) - - fs\n Arc Grenade - -  a\n Frag Grenade - - f\n Electric Smoke - e\n" )
+
+def printAvailable():
   print(chr(27)+'[2j')
   print('\033c')
   print('\x1bc')
@@ -15,44 +22,46 @@ def Available():
     if Ordnances[ordnance] > 0:
       print (ordnance)
   print ()
-def start():
-  print ('enter "help" for list of commands and symbols \n' )
-  print ("Available Titans:\n Ion - - - - i\n Tone - - -  t\n Monarch - - m\n Ronin - - - r\n Northstar - n\n Legion - -  l\n Scorch - -  s\n \nAvailable Ordnances:\n Gravity Star - - g\n Satchel - - - -  s\n Firestars (2) - - fs\n Arc Grenade - -  a\n Frag Grenade - - f\n Electric Smoke - e\n" )
 
-#Data Tracker
-Titans = {"Ion": 1, "Tone": 1, "Monarch":1, "Ronin":1, "Northstar":1, "Legion":1, "Scorch":1}
-Ordnances = {"Gravity Star": 1, "Satchel":1, "Firestar":2, "Arc Grenade":1, "Frag Grenade":1, "Electric Smoke":1}
+def resetData():
+  Titans = {"Ion": 1, "Tone": 1, "Monarch":1, "Ronin":1, "Northstar":1, "Legion":1, "Scorch":1}
+  Ordnances = {"Gravity Star": 1, "Satchel":1, "Firestar":2, "Arc Grenade":1, "Frag Grenade":1, "Electric Smoke":1}
 
-Available()
+def printHelpCommands():
+  print("---------------------------------------------------------")
+  print("r >>> resets program")
+  print("symbols >>> shows input symbols")
+  print("\n-To remove a single item, enter 'null' or 'no' for the symbol of the item not being changed\nex: removing just a frag grenade would look like: 'no f'")
+  print("\n-All input in converted to lowercase, so your interactions are not case sensitive")
+  print("---------------------------------------------------------")
+  print()
+
+#START OF PROGRAM?
+
+
 while True:
-  #User Input
-  x = input("Enter titan and ordnance: (TitanSymbol OrdnanceSymbol)")
-  x = x.lower()
+  printAvailable()
+
+  #collect user input
+  x = input("Enter titan and ordnance: (TitanSymbol OrdnanceSymbol)").lower()
   xs = x.split()
-  #reset and help
-  if x == "r":
-    Titans = {"Ion": 1, "Tone": 1, "Monarch":1, "Ronin":1, "Northstar":1, "Legion":1, "Scorch":1}
-    Ordnances = {"Gravity Star": 1, "Satchel":1, "Firestar":2, "Arc Grenade":1, "Frag Grenade":1, "Electric Smoke":1}
-    
-    #cleanup()
-    Available()
+
+  # process reset and help
+  if x == "r": #make a condition to detect "reset" as keyword as well
+    resetData()
+    printAvailable()
     continue
-  if x == "help":
-    print("---------------------------------------------------------")
-    print("r >>> resets program")
-    print("symbols >>> shows input symbols")
-    print("\n-To remove a single item, enter 'null' or 'no' for the symbol of the item not being changed\nex: removing just a frag grenade would look like: 'no f'")
-    print("\n-All input in converted to lowercase, so your interactions are not case sensitive")
-    print("---------------------------------------------------------")
-    print()
+  elif x == "help":
+    printHelpCommands()
     continue
-  if x == "symbols":
+  elif x == "symbols":
     print ("\n Ion - - - - i\n Tone - - -  t\n Monarch - - m\n Ronin - - - r\n Northstar - n\n Legion - -  l\n Scorch - -  s\n \n Gravity Star - - g\n Satchel - - - -  s\n Firestars (2) - - fs\n Arc Grenade - -  a\n Frag Grenade - - f\n Electric Smoke - e\n")
     continue
   print("---------------------------------------------------------")
  
   #Input Conversion
-  #Titan input con
+  #Titan input conv
+  # make this into a separate function?
   try:
     if xs[0] == "i" or xs[0] =="ion":
       xs[0] = "Ion"
@@ -73,6 +82,7 @@ while True:
   except:
     print ("INPUT ERROR, please re-enter that")   
     continue
+
   #Ordnance input conv
   try:
     if xs[1] == "g" or xs[1] =="gravity" or xs[1] =="grav" or xs[1] =="gs" or xs[1] == "gravs":
@@ -90,10 +100,8 @@ while True:
     elif xs[1] == "null" or xs[1] == "no":
       xs[1] == "no"
   except:
-    print ("INPUT ERROR, please re-enter that sorry")
+    print ("INPUT ERROR, please re-enter")
     continue
-  
-  
   
   #Subtract input from data
   for titan in Titans:
@@ -101,7 +109,7 @@ while True:
       if (Titans[titan] -1) >= 0:
         Titans[titan] -=1
       else:
-        print ("that Titan is already taken!")
+        print ("Titan is already taken")
     elif xs[1] == "no":
       pass
 
@@ -110,16 +118,10 @@ while True:
       if (Ordnances[ordnance] -1) >= 0:
         Ordnances[ordnance] -=1
       else:
-        print ("that Ordnance is already taken!")
+        print ("Ordnance is already taken")
     elif xs[1] == "no":
       pass
 
-
-  
   #Display Results
-  Available()
+  printAvailable()
 
-
-
-
-  
